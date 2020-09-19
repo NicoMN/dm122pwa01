@@ -60,7 +60,8 @@ async function updateCache(request) {
 async function cacheFirst(request) {
     try {
         const cache = await caches.open(cacheName);
-        return cache.match(request);
+        const response = await cache.match(request)
+        return response || fetch(request);
     } catch(error) {
         return await fetch(request);
     } finally {
